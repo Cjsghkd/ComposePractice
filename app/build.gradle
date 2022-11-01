@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -9,7 +10,7 @@ android {
     defaultConfig {
         applicationId "com.example.composepractice"
         minSdk 21
-        targetSdk 33
+        targetSdk 21
         versionCode 1
         versionName "1.0"
 
@@ -36,7 +37,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler
+        kotlinCompilerExtensionVersion compose_version
     }
     packagingOptions {
         resources {
