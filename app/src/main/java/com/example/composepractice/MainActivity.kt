@@ -1,11 +1,10 @@
 package com.example.composepractice
 
 import android.annotation.SuppressLint
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,10 +13,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -28,6 +28,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
@@ -39,48 +40,48 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Column(Modifier.fillMaxSize()) {
-                val color = remember {
-                    mutableStateOf(Color.Yellow)
-                }
-
-                ColorBox(
-                    Modifier
-                        .weight(1f)
-                        .fillMaxSize()
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.Center)
                 ) {
-                    color.value = it
+                    TextFieldID()
+                    Spacer(modifier = Modifier.height(30.dp))
+                    TextFieldPassWord()
                 }
-                Box(modifier = Modifier
-                    .background(color.value)
-                    .weight(1f)
-                    .fillMaxSize()
-                )
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ColorBox(
-    modifier: Modifier = Modifier,
-    updateColor: (Color) -> Unit
-) {
+fun TextFieldID() {
+    var text by remember { mutableStateOf("") }
 
-    Box(modifier = modifier
-        .background(Color.Red)
-        .clickable {
-            updateColor(
-                Color(
-                    Random.nextFloat(),
-                    Random.nextFloat(),
-                    Random.nextFloat(),
-                    1f
-                )
-            )
-        }
-    )
+    TextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text("Enter ID") },
+        )
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TextFieldPassWord() {
+    var password by rememberSaveable { mutableStateOf("") }
+
+        TextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Enter PassWord") },
+            visualTransformation = PasswordVisualTransformation()
+        )
+}
+
+
 
 
 
