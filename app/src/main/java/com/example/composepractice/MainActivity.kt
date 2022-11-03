@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,35 +45,49 @@ import kotlin.random.Random
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
-            val constraints = ConstraintSet {
-                val greenBox = createRefFor("greenBox")
-                val redBox = createRefFor("redBox")
-                val guideline = createGuidelineFromTop(0.5f)
+            var sizeState by remember { mutableStateOf(200.dp) }
+            val size by animateDpAsState(
+                targetValue = sizeState,
+//                tween(
+//                    durationMillis = 3000,
+//                    delayMillis = 300,
+//                    easing = LinearOutSlowInEasing
+//                )
 
-                constrain(greenBox) {
-                    top.linkTo(guideline)
-                    start.linkTo(parent.start)
-                    width = Dimension.value(100.dp)
-                    height = Dimension.value(100.dp)
+//                spring(
+//                    Spring.DampingRatioHighBouncy
+//                )
+
+//                keyframes { // 간단한 애니메이션용 (왠만하면 keyframes 대신 tween 사용하기)
+//                    durationMillis = 5000
+//                    sizeState at 0 with LinearEasing
+//                    sizeState * 1.5f at 1000 with FastOutLinearInEasing
+//                    sizeState * 2f at 5000
+//                }
+
+                tween(
+                    durationMillis = 1000
+                )
+            )
+            val infiniteTransition = rememberInfiniteTransition()
+            val color by infiniteTransition.animateColor(
+                initialValue = Color.Red,
+                targetValue = Color.Green,
+                animationSpec = infiniteRepeatable(
+                    tween(durationMillis = 2000),
+                    repeatMode = RepeatMode.Reverse
+                )
+            )
+            Box(modifier = Modifier
+                .size(size)
+                .background(color),
+            contentAlignment = Alignment.Center) {
+                Button(onClick = {
+                    sizeState += 50.dp
+                }) {
+                    Text("Increase Size")
                 }
-                constrain(redBox) {
-                    top.linkTo(parent.top)
-                    start.linkTo(greenBox.end)
-                    end.linkTo(parent.end)
-                    width = Dimension.value(100.dp)
-                    height = Dimension.value(100.dp)
-                }
-                createHorizontalChain(greenBox, redBox, chainStyle = ChainStyle.Packed)
-            }
-            ConstraintLayout(constraints, modifier = Modifier.fillMaxSize()) {
-                Box(modifier = Modifier
-                    .background(Color.Green)
-                    .layoutId("greenBox"))
-                Box(modifier = Modifier
-                    .background(Color.Red)
-                    .layoutId("redBox"))
             }
         }
     }
