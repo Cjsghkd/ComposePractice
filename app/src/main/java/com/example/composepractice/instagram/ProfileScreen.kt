@@ -3,6 +3,7 @@ package com.example.composepractice.instagram
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -21,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +37,29 @@ fun ProfileScreen() {
         Spacer(modifier = Modifier.height(25.dp))
         ButtonSection(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(25.dp))
+        HighlightSection(
+            highlight = listOf(
+                StoryHighlight(
+                    image = painterResource(id = com.example.composepractice.R.drawable.ic_youtube),
+                    text = "YouTube"
+                ),
+                StoryHighlight(
+                    image = painterResource(id = com.example.composepractice.R.drawable.ic_qa),
+                    text = "Q&A"
+                ),
+                StoryHighlight(
+                    image = painterResource(id = com.example.composepractice.R.drawable.ic_phone),
+                    text = "Phone"
+                ),
+                StoryHighlight(
+                    image = painterResource(id = com.example.composepractice.R.drawable.ic_email),
+                    text = "Email"
+                ),
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+        )
     }
 }
 
@@ -295,6 +320,35 @@ fun ActionButton(
                 contentDescription = null,
                 tint = Color.Black
             )
+        }
+    }
+}
+
+@Composable
+fun HighlightSection(
+    modifier: Modifier = Modifier,
+    highlight: List<StoryHighlight>
+) {
+    LazyRow(
+        modifier = modifier
+    ) {
+        items(highlight.size) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .padding(end = 20.dp)
+            ) {
+                RoundImage(
+                    image = highlight[it].image,
+                    modifier = Modifier.size(70.dp)
+                )
+                Text(
+                    text = highlight[it].text,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
