@@ -3,6 +3,7 @@ package com.example.composepractice
 import android.annotation.SuppressLint
 
 import android.os.Bundle
+import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColor
@@ -46,6 +47,10 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.composepractice.instagram.ProfileScreen
 import kotlinx.coroutines.delay
 import java.sql.Time
@@ -58,8 +63,61 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Navigation()
+            Surface(color = Color(0xFF2020), modifier = Modifier.fillMaxSize()) {
+                Navigation_Ani()
+            }
         }
+    }
+}
+
+@Composable
+fun Navigation_Ani() {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = "splash_screen"
+    ) {
+        composable("splash_screen") {
+            SplashScreen(navController = navController)
+        }
+        composable("main_screen") {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = "MAIN SCREEN", color = Color.Black)
+            }
+        }
+    }
+}
+
+@Composable
+fun SplashScreen(navController: NavController) {
+    val scale = remember {
+        Animatable(1f)
+    }
+    LaunchedEffect(key1 = true) {
+        scale.animateTo(
+            targetValue = 2f,
+            animationSpec = tween(
+                durationMillis = 700,
+                easing = {
+                    OvershootInterpolator(2f).getInterpolation(it)
+                }
+            )
+        )
+        delay(2000L)
+        navController.navigate("main_screen")
+    }
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ggae_dal_umm),
+            contentDescription = "Logo",
+            modifier = Modifier.scale(scale.value)
+        )
     }
 }
 
