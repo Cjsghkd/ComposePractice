@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.*
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.draw.alpha
@@ -30,6 +31,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -48,6 +50,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -63,63 +67,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Surface(color = Color(0xFF2020), modifier = Modifier.fillMaxSize()) {
-                Navigation_Ani()
-            }
+
         }
     }
 }
 
-@Composable
-fun Navigation_Ani() {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = "splash_screen"
-    ) {
-        composable("splash_screen") {
-            SplashScreen(navController = navController)
-        }
-        composable("main_screen") {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "MAIN SCREEN", color = Color.Black)
-            }
-        }
-    }
-}
 
-@Composable
-fun SplashScreen(navController: NavController) {
-    val scale = remember {
-        Animatable(1f)
-    }
-    LaunchedEffect(key1 = true) {
-        scale.animateTo(
-            targetValue = 2f,
-            animationSpec = tween(
-                durationMillis = 700,
-                easing = {
-                    OvershootInterpolator(2f).getInterpolation(it)
-                }
-            )
-        )
-        delay(2000L)
-        navController.navigate("main_screen")
-    }
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.ggae_dal_umm),
-            contentDescription = "Logo",
-            modifier = Modifier.scale(scale.value)
-        )
-    }
-}
+
 
 
 

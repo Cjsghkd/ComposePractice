@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -22,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 
 @Composable
-fun Navigation() {
+fun Navigation_ex() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
