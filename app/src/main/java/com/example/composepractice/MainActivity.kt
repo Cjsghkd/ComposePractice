@@ -55,6 +55,9 @@ import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.composepractice.JetpackComposeBasics.DefaultPreview
+import com.example.composepractice.JetpackComposeBasics.Greeting
+import com.example.composepractice.JetpackComposeBasics.MyApp
 import com.example.composepractice.instagram.ProfileScreen
 import kotlinx.coroutines.delay
 import java.sql.Time
@@ -67,7 +70,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
+            DefaultPreview()
         }
     }
 }
