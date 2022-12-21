@@ -59,6 +59,7 @@ import com.example.composepractice.JetpackComposeBasics.DefaultPreview
 import com.example.composepractice.JetpackComposeBasics.Greeting
 import com.example.composepractice.JetpackComposeBasics.MyApp
 import com.example.composepractice.LayoutPractive.AlignYourBodyRow
+import com.example.composepractice.LayoutPractive.FavoriteCollectionsGrid
 import com.example.composepractice.LayoutPractive.SearchBar
 import com.example.composepractice.LayoutPractive.alignYourBodyDataType
 import com.example.composepractice.instagram.ProfileScreen
@@ -74,7 +75,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val list: List<alignYourBodyDataType> = listOf(alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"))
-            AlignYourBodyRow(alignYourBodyData = list)
+//            AlignYourBodyRow(alignYourBodyData = list)
+            FavoriteCollectionsGrid(favoriteCollectionData = list)
         }
     }
 }
