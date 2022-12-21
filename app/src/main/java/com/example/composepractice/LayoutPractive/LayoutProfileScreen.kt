@@ -79,3 +79,42 @@ fun AlignYourBodyElementPreview() {
         modifier = Modifier.padding(8.dp)
     )
 }
+
+@Composable
+fun FavoriteCollectionCard(
+    @DrawableRes drawable: Int,
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = MaterialTheme.shapes.small,
+        modifier = modifier
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.width(192.dp)
+        ) {
+            Image(
+                painter = painterResource(drawable),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.size(56.dp)
+            )
+            Text(
+                text = text,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun FavoriteCollectionCardPreview() {
+    FavoriteCollectionCard(
+        drawable = com.example.composepractice.R.drawable.background,
+        text = "Nature meditations",
+        modifier = Modifier.padding(8.dp)
+    )
+}
