@@ -8,7 +8,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -20,6 +22,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.composepractice.R
+import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
@@ -153,4 +157,55 @@ fun FavoriteCollectionsGrid(
             FavoriteCollectionCard(drawable = item.drawable, text = item.text, modifier = Modifier.height(56.dp))
         }
     }
+}
+
+@Composable
+fun HomeSection(
+    title: String,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Column(modifier) {
+        Text(
+            text = title.uppercase(Locale.getDefault()),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
+                .padding(horizontal = 16.dp)
+        )
+        content()
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2)
+@Composable
+fun HomeSectionPreview() {
+    val list: List<alignYourBodyDataType> = listOf(alignYourBodyDataType(com.example.composepractice.R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"))
+    HomeSection(title = "Align your body") {
+        AlignYourBodyRow(alignYourBodyData = list)
+    }
+}
+
+@Composable
+fun HomeScreen(modifier: Modifier = Modifier) {
+    val list: List<alignYourBodyDataType> = listOf(alignYourBodyDataType(com.example.composepractice.R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"),alignYourBodyDataType(R.drawable.ggae_dal_umm, "GG"), alignYourBodyDataType(R.drawable.background, "PP"))
+    Column(
+        modifier
+            .verticalScroll(rememberScrollState())
+            .padding(vertical = 16.dp)
+    ) {
+        SearchBar(Modifier.padding(horizontal = 16.dp))
+        HomeSection(title = "Align your body") {
+            AlignYourBodyRow(alignYourBodyData = list)
+        }
+        HomeSection(title = "Favorite collections") {
+            FavoriteCollectionsGrid(favoriteCollectionData = list)
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF0EAE2, heightDp = 180)
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen()
 }
